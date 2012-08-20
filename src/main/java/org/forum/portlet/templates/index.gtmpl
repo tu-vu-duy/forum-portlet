@@ -1,0 +1,5 @@
+#{param name=categories/}
+<div id="gatein">
+   Forum Portlet
+   #{include path=categories.gtmpl/}
+</div>
