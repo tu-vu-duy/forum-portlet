@@ -1,0 +1,74 @@
+#{param name=category/}
+#{param name=forums/}
+
+
+<div class="UICategories" id="UICategories">
+	<div class="UIForumCategory">
+	    <div class="ForumToolbar ForumActionToolbar ClearFix">
+	      <h6 class="Title oncontextmenu" title="${category.name}">
+	         <a class="ActionLink UICategoryTitle" href="action">${category.name}</a>
+	      </h6>
+	    </div>
+   
+	    <div class="ContentContainer">
+	          <div class="ForumList">
+	            <table cellspacing="0" cellpadding="0" border="0" class="UIGrid">
+	              <thead>
+	                <tr>
+	                  <th>Forums</th>
+	                  <th style="width:30%;">lastpost</th>
+	                  <th style="width:75px;">thread</th>
+	                  <th style="width:65px;">post</th>
+	                </tr>
+	              </thead>
+	              <tbody>
+	              <% 
+	                if(forums.size() == 0) {
+	              %>
+	                <tr>
+	                  <td class="Tdbox"><%=_ctx.appRes("UICategory.label.noForum");%></td>
+	                  <td class="Tdbox"><%=_ctx.appRes("UICategory.label.noPost");%></td>
+	                  <td class="Tdbox">0</td>
+	                  <td class="Tdbox">0</td>
+	                </tr>
+	              <% } else {%>
+	                <%
+	                  for(forum in forums) {
+	                  	def topic = Controller_.getTopic(forum.id, forum.lastTopicPath)
+	                %>
+	                    <tr class="$classRow oncontextmenu">
+	                      <td>
+	                        <a class="ForumTitle ActionLink" href="#">${forum.name}</a>
+	                        <div><span></span></div>
+	                        <div class="ForumDescription">${forum.description}</div>
+	                      </td>
+	                      <td>
+	                      <% if(topic != null) %>
+							<div>
+								<a class="LastPostTitle ActionLink" href="#" title="topic.name" style="float:none;">topic.name</a>
+	                        </div>
+	                        <div class="LastPostInfos">
+	                          <span>by&nbsp;</span>
+	                          <a>topic.lastPostBy</a>
+	                          <span class="DateTime">topic.lastPostDate</span>
+	                        </div>  
+	                      <%} else { %> 
+	                      <td class="Tdbox" style="height:40px;">
+	                          khong co bai viet moi nao :D
+	                      <%} %>
+	                      </td>
+	                      <td class="Tdbox">forum.topicCount</td>
+	                      <td class="Tdbox">forum.postCount</td>
+	                    </tr>
+	                <% } 
+	                 }
+	              %>
+	              </tbody>
+	            </table>              
+	            
+	          </div>
+	        </div>
+   
+   
+   </div>
+</div>

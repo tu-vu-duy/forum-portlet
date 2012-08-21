@@ -1,5 +1,16 @@
 #{param name=categories/}
-<div id="gatein">
+#{param name=category/}
+
+<div id="gatein" class="UIForumPortlet">
    Forum Portlet
-   #{include path=categories.gtmpl/}
+   
+     
+  <div class="main-container UICategoryContainer">
+		<% categories.each() { 
+			cate -> category = cate;
+		%>
+		  #{include path=category.gtmpl/}
+		<% } %>
+  </div>
+	
 </div>
