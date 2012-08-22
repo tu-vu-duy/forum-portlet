@@ -1,55 +1,33 @@
 #{decorate path=main.gtmpl/}
-#{param name=category/}
+#{param name=categoryBen/}
 
-<%
-  
-def title = "";
-def order = "0";
-def pri = "";
-def des = "";
-def id = "";
-
-if(category.name != null) {
-	title = category.name;
-	order = category.categoryOrder;
-	for (def str : category.userPrivate) {
-		pri += str + ",";
-	}
-	des = category.description;
-}
-%>
 <div class="UICategoryForm">
-	<form id="UICategoryForm" name="UICategoryForm">
+	<form id="UICategoryForm" name="UICategoryForm" action="@{processSaveCategory(id = categoryBen.id)}" method="post">
 	  <table class="UIFormGrid">
 	    <tbody>
 	      <tr>
 	        <td class="FieldLabel">Title</td>
-	        <td class="FieldComponent"><input name="CategoryTitle" id="CategoryTitle" type="text" value="${title}" /> *</td>
+	        <td class="FieldComponent"><input name="${categoryBen.name}" id="CategoryTitle" type="text" value="${categoryBen.name}" /> *</td>
 	      </tr>
 	
 	      <tr>
 	        <td class="FieldLabel">Order</td>
-	        <td class="FieldComponent"><input name="CategoryOrder" id="CategoryOrder" value="0" type="text" value="${order}"/></td>
+	        <td class="FieldComponent"><input name="${categoryBen.categoryOrder}" id="CategoryOrder" value="${categoryBen.categoryOrder}" type="text"/></td>
 	      </tr>
+	     
 	      <tr>
-	        <td class="FieldLabel">Restricted Audience</td>
+	        <td class="FieldLabel">Description </td>
 	        <td class="FieldComponent">
-	        	<textarea class="textarea" name="UserPrivate" id="UserPrivate" value="${pri}" rows="10" cols="30"></textarea>
-	        </td>
-	      </tr>
-	      <tr>
-	        <td class="FieldLabel">Description</td>
-	        <td class="FieldComponent">
-	        	<textarea class="textarea" name="Description" id="Description" value="${des}" rows="10" cols="30"></textarea>
+	        	<textarea class="textarea" name="${categoryBen.description}" id="Description" value="${categoryBen.description}" rows="10" cols="30"></textarea>
 	        </td>
 	      </tr>
 	    </tbody>
 	  </table>
+		<div class="UIAction">
+			<input type="submit" value="Save" name="confirm"/>
+	    <a class="ActionButton LightBlueStyle" href="@{index()}">Cancel</a>
+	  </div>
 	</form>
 
-		<div class="UIAction">
-      <a class="ActionButton LightBlueStyle" href="@{saveCategory(id = id)}">Save</a>
-      <a class="ActionButton LightBlueStyle" href="@{index()}">Cancel</a>
-    </div>
 
 </div>

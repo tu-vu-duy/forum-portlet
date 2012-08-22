@@ -6,9 +6,11 @@ if(!isHome) { %>
 <link href="/forum/skin/DefaultSkin/webui/Stylesheet.css" type="text/css" rel="stylesheet" id="forum-juzu">
 <div id="UIForumPortlet" class="UIForumPortlet" style="padding:15px;">
 	<div>
-	<a href="@{index()}">Back to Home</a>
+	<a href="@{index()}">Back to Home</a> | 
+	<a href="@{editCategory(id = CategoryBen.id)}">Edit category</a>
 	</div>
-<% } %>
+<% } else { %>
+<% }%>
 <div class="UICategories" id="UICategories">
 	<div class="UIForumCategory">
 	    <div class="ForumToolbar ForumActionToolbar ClearFix">

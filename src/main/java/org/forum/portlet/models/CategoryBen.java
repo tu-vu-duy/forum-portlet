@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import juzu.Param;
+
 import org.exoplatform.forum.service.Category;
 import org.exoplatform.forum.service.Forum;
 
+@Param
 public class CategoryBen {
   private String        id;
 
@@ -35,6 +38,8 @@ public class CategoryBen {
     setPath(category.getPath());
     setName(category.getCategoryName());
     setDescription(category.getDescription());
+    setOwner(category.getOwner());
+    setCategoryOrder(category.getCategoryOrder());
   }
 
   public String getId() {

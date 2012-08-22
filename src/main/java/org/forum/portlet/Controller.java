@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import juzu.Response;
+import juzu.SessionScoped;
+import juzu.Action;
 import juzu.Path;
 import juzu.Route;
 import juzu.View;
@@ -14,6 +17,7 @@ import org.exoplatform.forum.service.ForumService;
 import org.exoplatform.forum.service.Category;
 import org.exoplatform.forum.service.Forum;
 import org.exoplatform.forum.service.Topic;
+import org.exoplatform.services.security.Identity;
 import org.forum.portlet.models.CategoryBen;
 import org.forum.portlet.models.ForumBen;
 
@@ -33,7 +37,7 @@ public class Controller {
 
   @Inject @Path("form/addcategory.gtmpl") addcategory addcategory;
 
-  // @Inject @SessionScoped Identity currentUser;
+//  @Inject @SessionScoped Identity currentUser;
 
   @View
   public void index() throws IOException, Exception {
@@ -90,23 +94,29 @@ public class Controller {
   @View
   @Route("/addcategory")
   public void addCategory() throws Exception {
-    System.out.println("\n\n=======> addCategory test");
-    org.exoplatform.forum.service.Category cat = new org.exoplatform.forum.service.Category();
+    Category cate = new Category();
+    cate.setCategoryName("");
+    cate.setOwner("root");
+//    cate.setOwner(currentUser.getUserId());
+    cate.setCategoryOrder(0);
+    cate.setDescription("");
+    cate.setPath("");
     addcategory.with()
-               .category(cat).render();
+               .categoryBen(new CategoryBen(cate)).render();
   }
   
   @View
   @Route("/addcategory/{id}")
   public void editCategory(String id) throws Exception {
-//    Category category = forumService.getCategory(id);
-//    addcategory.with()
-//               .category(category).render();
+    addcategory.with()
+               .categoryBen(new CategoryBen(forumService.getCategory(id))).render();
   }
   
-  @View
-  @Route("/form/addcategory/{id}")
-  public void saveCategory(String id) throws Exception {
-
+  @Action
+  @Route("/addcategory/{id}/{categoryBen}")
+  public Response processSaveCategory(String id, CategoryBen categoryBen) throws Exception {
+    System.out.println("Cate id: " + id);
+    System.out.println("Cate: " + categoryBen);
+    return Controller_.index();
   }
 }
