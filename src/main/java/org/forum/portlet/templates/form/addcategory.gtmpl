@@ -1,0 +1,55 @@
+#{decorate path=main.gtmpl/}
+#{param name=category/}
+
+<%
+  
+def title = "";
+def order = "0";
+def pri = "";
+def des = "";
+def id = "";
+
+if(category.name != null) {
+	title = category.name;
+	order = category.categoryOrder;
+	for (def str : category.userPrivate) {
+		pri += str + ",";
+	}
+	des = category.description;
+}
+%>
+<div class="UICategoryForm">
+	<form id="UICategoryForm" name="UICategoryForm">
+	  <table class="UIFormGrid">
+	    <tbody>
+	      <tr>
+	        <td class="FieldLabel">Title</td>
+	        <td class="FieldComponent"><input name="CategoryTitle" id="CategoryTitle" type="text" value="${title}" /> *</td>
+	      </tr>
+	
+	      <tr>
+	        <td class="FieldLabel">Order</td>
+	        <td class="FieldComponent"><input name="CategoryOrder" id="CategoryOrder" value="0" type="text" value="${order}"/></td>
+	      </tr>
+	      <tr>
+	        <td class="FieldLabel">Restricted Audience</td>
+	        <td class="FieldComponent">
+	        	<textarea class="textarea" name="UserPrivate" id="UserPrivate" value="${pri}" rows="10" cols="30"></textarea>
+	        </td>
+	      </tr>
+	      <tr>
+	        <td class="FieldLabel">Description</td>
+	        <td class="FieldComponent">
+	        	<textarea class="textarea" name="Description" id="Description" value="${des}" rows="10" cols="30"></textarea>
+	        </td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</form>
+
+		<div class="UIAction">
+      <a class="ActionButton LightBlueStyle" href="@{saveCategory(id = id)}">Save</a>
+      <a class="ActionButton LightBlueStyle" href="@{index()}">Cancel</a>
+    </div>
+
+</div>

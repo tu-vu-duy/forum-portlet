@@ -1,12 +1,23 @@
-#{param name=category/}
-#{param name=forums/}
+#{param name=CategoryBen/}
 
-
+<% 
+ def isHome = CategoryBen.isHome;
+if(!isHome) { %>
+<link href="/forum/skin/DefaultSkin/webui/Stylesheet.css" type="text/css" rel="stylesheet" id="forum-juzu">
+<div id="UIForumPortlet" class="UIForumPortlet" style="padding:15px;">
+	<div>
+	<a href="@{index()}">Back to Home</a>
+	</div>
+<% } %>
 <div class="UICategories" id="UICategories">
 	<div class="UIForumCategory">
 	    <div class="ForumToolbar ForumActionToolbar ClearFix">
-	      <h6 class="Title oncontextmenu" title="${category.name}">
-	         <a class="ActionLink UICategoryTitle" href="action">${category.name}</a>
+	      <h6 class="Title oncontextmenu" title="${CategoryBen.name}">
+	      <% if(isHome) { %>
+	         <a class="ActionLink UICategoryTitle" href="@{loadCategory(id = CategoryBen.id)}">${CategoryBen.name}</a>
+	      <% } else { %>
+	      	 <div class="ActionLink UICategoryTitle">${CategoryBen.name}</div>
+	      <% } %>
 	      </h6>
 	    </div>
    
@@ -15,6 +26,7 @@
 	            <table cellspacing="0" cellpadding="0" border="0" class="UIGrid">
 	              <thead>
 	                <tr>
+	                  <th style="width:40px;">&nbsp;</th>
 	                  <th>Forums</th>
 	                  <th style="width:30%;">lastpost</th>
 	                  <th style="width:75px;">thread</th>
@@ -23,52 +35,66 @@
 	              </thead>
 	              <tbody>
 	              <% 
+	              	def forums = CategoryBen.forumBens;
 	                if(forums.size() == 0) {
 	              %>
 	                <tr>
-	                  <td class="Tdbox"><%=_ctx.appRes("UICategory.label.noForum");%></td>
-	                  <td class="Tdbox"><%=_ctx.appRes("UICategory.label.noPost");%></td>
+	                  <td>&nbsp;</td>
+	                  <td class="Tdbox">noForum</td>
+	                  <td class="Tdbox">noPost</td>
 	                  <td class="Tdbox">0</td>
 	                  <td class="Tdbox">0</td>
 	                </tr>
 	              <% } else {%>
 	                <%
-	                  for(forum in forums) {
-	                  	def topic = Controller_.getTopic(forum.id, forum.lastTopicPath)
+	                	def i = 0;
+	                  for(def forum : forums) {
+	                  	def topic = forum.lastTopic;
+	                  	def classRow = "whileRow";
+	                  	if(i%2 == 0) classRow = "whileRow";
+                    	else classRow = "OddRow";
+                    	i = i + 1;
 	                %>
-	                    <tr class="$classRow oncontextmenu">
+	                    <tr class="${classRow} oncontextmenu">
+	                      <td class="Tdbox"><div class="ForumStatusIcon ${forum.classIcon}" title="${forum.titleStatus}"><span></span></div></td>
 	                      <td>
 	                        <a class="ForumTitle ActionLink" href="#">${forum.name}</a>
 	                        <div><span></span></div>
 	                        <div class="ForumDescription">${forum.description}</div>
 	                      </td>
+	                      <% if(topic != null) { %>
 	                      <td>
-	                      <% if(topic != null) %>
-							<div>
-								<a class="LastPostTitle ActionLink" href="#" title="topic.name" style="float:none;">topic.name</a>
+													<div class="ClearFix">
+														<div class="LastPostIcon ${topic.icon}" style="padding-left: 18px; width:auto;">
+															<a class="LastPostTitle ActionLink" href="#" title="${topic.name}" style="float:none;">${topic.name}</a>
+													  </div>
 	                        </div>
 	                        <div class="LastPostInfos">
 	                          <span>by&nbsp;</span>
-	                          <a>topic.lastPostBy</a>
-	                          <span class="DateTime">topic.lastPostDate</span>
+	                          <a>${topic.lastPostBy}</a>
+	                          <span class="DateTime">(${topic.lastPostDate})</span>
 	                        </div>  
+	                      </td>
 	                      <%} else { %> 
 	                      <td class="Tdbox" style="height:40px;">
 	                          khong co bai viet moi nao :D
-	                      <%} %>
 	                      </td>
-	                      <td class="Tdbox">forum.topicCount</td>
-	                      <td class="Tdbox">forum.postCount</td>
+	                      <%} %>
+	                      <td class="Tdbox">${forum.topicCount}</td>
+	                      <td class="Tdbox">${forum.postCount}</td>
 	                    </tr>
-	                <% } 
-	                 }
-	              %>
+	                <% } %>
+	              <% } %>
+
 	              </tbody>
 	            </table>              
 	            
 	          </div>
 	        </div>
-   
-   
+
    </div>
 </div>
+
+<% if(!isHome) { %>
+</div>
+<% } %>

@@ -1,0 +1,4 @@
+<link href="/forum/skin/DefaultSkin/webui/Stylesheet.css" type="text/css" rel="stylesheet" id="forum-juzu">
+<div id="UIForumPortlet" class="UIForumPortlet" style="padding:15px;">
+	 #{insert/}
+</div>
