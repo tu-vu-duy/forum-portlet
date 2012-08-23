@@ -5,7 +5,7 @@ import java.util.Date;
 import org.exoplatform.forum.service.Forum;
 import org.exoplatform.forum.service.Topic;
 
-public class ForumBen {
+public class ForumBean {
   private String  id;
 
   private String  owner;
@@ -36,7 +36,7 @@ public class ForumBen {
 
   public String   categoryId;
 
-  public ForumBen(Forum forum) {
+  public ForumBean(Forum forum) {
     setId(forum.getId());
     setPath(forum.getPath());
     setName(forum.getForumName());

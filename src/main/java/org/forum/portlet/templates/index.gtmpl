@@ -1,14 +1,14 @@
 #{decorate path=main.gtmpl/}
-#{param name=categoryBens/}
-#{param name=CategoryBen/}
+#{param name=categoryBeans/}
+#{param name=CategoryBean/}
 
 <div id="gatein">
   <div class="main-container UICategoryContainer">
   	<div>
   		<a href="@{addCategory()}">Add category</a>
   	</div>
-		<% categoryBens.each() {
-			cate -> CategoryBen = cate;
+		<% categoryBeans.each() {
+			cate -> CategoryBean = cate;
 		%>
 		  #{include path=category.gtmpl/}
 		<% } %>

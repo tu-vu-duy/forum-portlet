@@ -1,3 +1,4 @@
+<link href="/eXoResources/skin/DefaultSkin/webui/component/UIForms/UIForm/Stylesheet-lt.css" type="text/css" rel="stylesheet" id="forum-juzu">
 <link href="/forum/skin/DefaultSkin/webui/Stylesheet.css" type="text/css" rel="stylesheet" id="forum-juzu">
 <div id="UIForumPortlet" class="UIForumPortlet" style="padding:15px;">
 	 #{insert/}

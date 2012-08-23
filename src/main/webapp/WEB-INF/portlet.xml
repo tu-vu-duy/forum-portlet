@@ -14,8 +14,8 @@
      </init-param>
      <init-param>
        <name>juzu.src_path</name>
-       <!-- value>/home/tuvd/java/eXoProjects/exodev/forum-portlet/src/main/java</value -->
-       <value>/media/Exo-Working/java/eXoProjects/exodev/forum-portlet/src/main/java</value>
+       <value>/home/tuvd/java/eXoProjects/exodev/forum-portlet/src/main/java</value>
+       <!-- value>/media/Exo-Working/java/eXoProjects/exodev/forum-portlet/src/main/java</value -->
      </init-param>
      <init-param>
        <name>juzu.inject</name>

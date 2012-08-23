@@ -1,24 +1,24 @@
-#{param name=CategoryBen/}
+#{param name=CategoryBean/}
 
 <% 
- def isHome = CategoryBen.isHome;
+ def isHome = CategoryBean.isHome;
 if(!isHome) { %>
 <link href="/forum/skin/DefaultSkin/webui/Stylesheet.css" type="text/css" rel="stylesheet" id="forum-juzu">
 <div id="UIForumPortlet" class="UIForumPortlet" style="padding:15px;">
 	<div>
 	<a href="@{index()}">Back to Home</a> | 
-	<a href="@{editCategory(id = CategoryBen.id)}">Edit category</a>
+	<a href="@{editCategory(id = CategoryBean.id)}">Edit category</a>
 	</div>
 <% } else { %>
 <% }%>
 <div class="UICategories" id="UICategories">
 	<div class="UIForumCategory">
 	    <div class="ForumToolbar ForumActionToolbar ClearFix">
-	      <h6 class="Title oncontextmenu" title="${CategoryBen.name}">
+	      <h6 class="Title oncontextmenu" title="${CategoryBean.name}">
 	      <% if(isHome) { %>
-	         <a class="ActionLink UICategoryTitle" href="@{loadCategory(id = CategoryBen.id)}">${CategoryBen.name}</a>
+	         <a class="ActionLink UICategoryTitle" href="@{loadCategory(id = CategoryBean.id)}">${CategoryBean.name}</a>
 	      <% } else { %>
-	      	 <div class="ActionLink UICategoryTitle">${CategoryBen.name}</div>
+	      	 <div class="ActionLink UICategoryTitle">${CategoryBean.name}</div>
 	      <% } %>
 	      </h6>
 	    </div>
@@ -37,7 +37,7 @@ if(!isHome) { %>
 	              </thead>
 	              <tbody>
 	              <% 
-	              	def forums = CategoryBen.forumBens;
+	              	def forums = CategoryBean.forumBeans;
 	                if(forums.size() == 0) {
 	              %>
 	                <tr>

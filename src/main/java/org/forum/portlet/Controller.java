@@ -18,8 +18,8 @@ import org.exoplatform.forum.service.Category;
 import org.exoplatform.forum.service.Forum;
 import org.exoplatform.forum.service.Topic;
 import org.exoplatform.services.security.Identity;
-import org.forum.portlet.models.CategoryBen;
-import org.forum.portlet.models.ForumBen;
+import org.forum.portlet.models.CategoryBean;
+import org.forum.portlet.models.ForumBean;
 
 import org.forum.portlet.templates.index;
 import org.forum.portlet.templates.category;
@@ -42,36 +42,36 @@ public class Controller {
   @View
   public void index() throws IOException, Exception {
     index.with()
-         .categoryBens(buildCategoryBen()).render();
+         .categoryBeans(buildCategoryBean()).render();
   }
 
-  public List<CategoryBen> buildCategoryBen() throws Exception {
-    List<CategoryBen> categoryBens = new ArrayList<CategoryBen>();
+  public List<CategoryBean> buildCategoryBean() throws Exception {
+    List<CategoryBean> categoryBeans = new ArrayList<CategoryBean>();
     List<Category> categories = forumService.getCategories();
     for (Category category : categories) {
-      categoryBens.add(getCategoryBen(category));
+      categoryBeans.add(getCategoryBean(category));
     }
-    return categoryBens;
+    return categoryBeans;
   }
 
-  public CategoryBen getCategoryBen(Category category) throws Exception {
-    CategoryBen categoryBen = new CategoryBen(category);
-    categoryBen.setForumBens(buildForumBens(forumService.getForums(category.getId(), null)));
-    return categoryBen;
+  public CategoryBean getCategoryBean(Category category) throws Exception {
+    CategoryBean categoryBean = new CategoryBean(category);
+    categoryBean.setForumBeans(buildForumBeans(forumService.getForums(category.getId(), null)));
+    return categoryBean;
   }
 
-  public List<ForumBen> buildForumBens(List<Forum> forums) throws Exception {
-    List<ForumBen> forumBens = new ArrayList<ForumBen>();
+  public List<ForumBean> buildForumBeans(List<Forum> forums) throws Exception {
+    List<ForumBean> forumBeans = new ArrayList<ForumBean>();
     for (Forum forum : forums) {
-      forumBens.add(getForumBen(forum));
+      forumBeans.add(getForumBean(forum));
     }
-    return forumBens;
+    return forumBeans;
   }
 
-  public ForumBen getForumBen(Forum forum) throws Exception {
-    ForumBen forumBen = new ForumBen(forum);
-    forumBen.setLastTopic(getTopic(forum.getLastTopicPath()));
-    return forumBen;
+  public ForumBean getForumBean(Forum forum) throws Exception {
+    ForumBean forumBean = new ForumBean(forum);
+    forumBean.setLastTopic(getTopic(forum.getLastTopicPath()));
+    return forumBean;
   }
 
   public Topic getTopic(String topicPath) throws Exception {
@@ -85,10 +85,10 @@ public class Controller {
   @View
   @Route("/category/{id}")
   public void loadCategory(String id) throws Exception {
-    CategoryBen categoryBen = getCategoryBen(forumService.getCategory(id));
-    categoryBen.setHome(false);
+    CategoryBean categoryBean = getCategoryBean(forumService.getCategory(id));
+    categoryBean.setHome(false);
     category.with()
-            .CategoryBen(categoryBen).render();
+            .CategoryBean(categoryBean).render();
   }
 
   @View
@@ -98,25 +98,36 @@ public class Controller {
     cate.setCategoryName("");
     cate.setOwner("root");
 //    cate.setOwner(currentUser.getUserId());
-    cate.setCategoryOrder(0);
+    cate.setCategoryOrder(1);
     cate.setDescription("");
     cate.setPath("");
     addcategory.with()
-               .categoryBen(new CategoryBen(cate)).render();
+               .categoryBean(new CategoryBean(cate)).render();
   }
   
   @View
   @Route("/addcategory/{id}")
   public void editCategory(String id) throws Exception {
     addcategory.with()
-               .categoryBen(new CategoryBen(forumService.getCategory(id))).render();
+               .categoryBean(new CategoryBean(forumService.getCategory(id))).render();
   }
   
   @Action
-  @Route("/addcategory/{id}/{categoryBen}")
-  public Response processSaveCategory(String id, CategoryBen categoryBen) throws Exception {
-    System.out.println("Cate id: " + id);
-    System.out.println("Cate: " + categoryBen);
+  @Route("/addcategory/{id}/category")
+  public Response processSaveCategory(String id, CategoryBean category) throws Exception {
+    if(category != null) {
+      category.setId(id);
+      Category cate  = category.toCategory();
+      if(cate.getPath() == null || cate.getPath().length() == 0){
+        forumService.saveCategory(cate, true);
+      } else {
+        cate = forumService.getCategory(id);
+        if(cate != null) {
+          cate = category.toCategory(cate);
+          forumService.saveCategory(cate, false);
+        }
+      }
+    }
     return Controller_.index();
   }
 }

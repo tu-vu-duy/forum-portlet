@@ -1,24 +1,42 @@
 #{decorate path=main.gtmpl/}
-#{param name=categoryBen/}
-
+#{param name=categoryBean/}
+<% 
+ def category = categoryBean;
+%>
 <div class="UICategoryForm">
-	<form id="UICategoryForm" name="UICategoryForm" action="@{processSaveCategory(id = categoryBen.id)}" method="post">
+	<form action="@{processSaveCategory(id = category.id, category = categoryBean)}" method="post" class="UIForm">
+		<input type="hidden" value="${category.path}" name="path"/>
+		<input type="hidden" value="${category.id}" name="id"/>
 	  <table class="UIFormGrid">
 	    <tbody>
 	      <tr>
 	        <td class="FieldLabel">Title</td>
-	        <td class="FieldComponent"><input name="${categoryBen.name}" id="CategoryTitle" type="text" value="${categoryBen.name}" /> *</td>
+	        <td class="FieldComponent"><input name="name" type="text" value="${category.name}"/> *</td>
 	      </tr>
 	
 	      <tr>
 	        <td class="FieldLabel">Order</td>
-	        <td class="FieldComponent"><input name="${categoryBen.categoryOrder}" id="CategoryOrder" value="${categoryBen.categoryOrder}" type="text"/></td>
+	        <td class="FieldComponent"><input name="categoryOrder" value="${category.categoryOrder}" type="text"/></td>
 	      </tr>
 	     
 	      <tr>
+	        <td class="FieldLabel">Restricted Audience</td>
+	        <td class="FieldComponent">
+	        	<textarea class="textarea" style="width: 283px; height: 92px;" name="userPrivates">${category.userPrivates}</textarea>
+	        </td>
+	      </tr>
+
+	      <tr>
 	        <td class="FieldLabel">Description </td>
 	        <td class="FieldComponent">
-	        	<textarea class="textarea" name="${categoryBen.description}" id="Description" value="${categoryBen.description}" rows="10" cols="30"></textarea>
+	        	<textarea class="textarea" style="width: 283px; height: 92px;" name="description">${category.description}</textarea>
+	        </td>
+	      </tr>
+
+	      <tr>
+	        <td class="FieldLabel">Moderators </td>
+	        <td class="FieldComponent">
+	        	<textarea class="textarea" style="width: 283px; height: 92px;" name="moderators">${category.moderators}</textarea>
 	        </td>
 	      </tr>
 	    </tbody>
