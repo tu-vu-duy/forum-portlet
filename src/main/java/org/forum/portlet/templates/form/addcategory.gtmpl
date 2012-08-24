@@ -4,9 +4,9 @@
  def category = categoryBean;
 %>
 <div class="UICategoryForm">
-	<form action="@{processSaveCategory(id = category.id, category = categoryBean)}" method="post" class="UIForm">
-		<input type="hidden" value="${category.path}" name="path"/>
-		<input type="hidden" value="${category.id}" name="id"/>
+	<form action="@{processSaveCategory(id = category.id)}" method="post" class="UIForm">
+	  <input type="hidden" value="${category.path}" name="path"/>
+	  <input type="hidden" value="${category.id}" name="id"/>
 	  <table class="UIFormGrid">
 	    <tbody>
 	      <tr>
